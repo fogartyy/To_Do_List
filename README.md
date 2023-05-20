@@ -28,7 +28,7 @@ The To-Do List App is a web application that allows users to create and manage t
 1. Clone the repository:
 
    ```shell
-   git clone https://github.com/your-username/to-do-list.git
+   git clone https://github.com/fogartyy/to-do-list.git
    ```
 
 2. Navigate to the project directory:
