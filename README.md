@@ -84,7 +84,7 @@ For detailed documentation, refer to the [API Documentation](./docs/api.md) file
 
 The To-Do List App uses the following database schema:
 
-Table: todos
+Table: todolist
 -----------------------------
 | Column       | Type       |
 -----------------------------
