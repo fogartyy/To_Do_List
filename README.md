@@ -1,70 +1,99 @@
-# Getting Started with Create React App
+# Project Name
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+To-Do List App
 
-## Available Scripts
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+- [Project Overview](#project-overview)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Documentation](#api-documentation)
+- [Database Schema](#database-schema)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Project Overview
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The To-Do List App is a web application that allows users to create and manage their daily tasks. Users can register an account, log in, and perform operations such as adding, editing, and deleting tasks. The app provides a simple and intuitive user interface for managing to-do lists efficiently.
 
-### `npm test`
+## Technologies Used
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js
+- Express.js
+- MySQL
+- React
+- Docker
+- Docker Compose
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```shell
+   git clone https://github.com/your-username/to-do-list.git
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Navigate to the project directory:
 
-### `npm run eject`
+   ```shell
+   cd to-do-list
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. Create a `.env` file with the following environment variables:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```shell
+   # Database
+   DB_HOST=db
+   DB_PORT=3306
+   DB_USER=root
+   DB_PASSWORD=your_password
+   DB_NAME=to_do_list_db
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   Replace `your_password` with your desired MySQL root password.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. Build and run the Docker containers:
 
-## Learn More
+   ```shell
+   docker-compose up --build
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   This will start the API server, MySQL database, and the client application.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+5. Access the To-Do List App at `http://localhost:3000`.
 
-### Code Splitting
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. Register an account or log in with your existing account.
+2. Create a new task by clicking on the "Add Task" button.
+3. Edit a task by clicking on the task and modifying the details.
+4. Mark a task as completed by checking the checkbox next to it.
+5. Delete a task by clicking on the delete button.
 
-### Analyzing the Bundle Size
+## API Documentation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+The To-Do List App provides the following API endpoints:
 
-### Making a Progressive Web App
+- `GET /todos`: Get all tasks.
+- `GET /todos/:id`: Get a specific task by ID.
+- `POST /todos`: Create a new task.
+- `PUT /todos/:id`: Update a task.
+- `DELETE /todos/:id`: Delete a task.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+For detailed documentation, refer to the [API Documentation](./docs/api.md) file.
 
-### Advanced Configuration
+## Database Schema
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+The To-Do List App uses the following database schema:
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Table: todos
+-----------------------------
+| Column       | Type       |
+-----------------------------
+| id           | int        |
+| title        | varchar    |
+| description  | text       |
+| completed    | boolean    |
+| createdAt    | timestamp  |
+| updatedAt    | timestamp  |
+-----------------------------
