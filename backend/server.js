@@ -1,7 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 const mysql = require('mysql2');
 
 const app = express();
+
+// Enable CORS
+app.use(cors());
+app.use(express.json());
 var connection;
 
 function connectWithRetry() {

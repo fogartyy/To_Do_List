@@ -1,9 +1,13 @@
-API_URL = "http://localhost:8080";
+import axios from 'axios';
+
+const API_URL = "http://localhost:8080";
+
 //create function to post data to api
 export const createTodo = async (data) => {
     try {
+        console.log(data);
         const response = await axios.post(`${API_URL}/todos`, data);
-        return response.data;
+        //log
     } catch (error) {
         throw error;
     }
