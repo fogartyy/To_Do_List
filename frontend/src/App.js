@@ -1,7 +1,7 @@
 import './App.css';
 
 //todolist container and create todolist
-import { TodoListContainer, CreateTodoItem } from './components/todolist';
+import { TodoListContainer} from './components/todolist';
 
 
 function App() {

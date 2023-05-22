@@ -65,16 +65,18 @@ app.post('/todos', (req, res) => {
   // Update a todo
   app.put('/todos/:id', (req, res) => {
     const id = req.params.id;
-    const { title, description } = req.body;
-    const query = 'UPDATE todos SET title = ?, description = ? WHERE id = ?';
-    connection.query(query, [title, description, id], (err) => {
+    const { title, description, completed } = req.body;
+    const query = 'UPDATE todos SET title = ?, description = ?, completed = ? WHERE id = ?';
+    connection.query(query, [title, description, completed, id], (err) => {
       if (err) {
         console.error('Error updating todo:', err);
         res.status(500).json({ error: 'Failed to update todo' });
       } else {
         res.status(200).json({ message: 'Todo updated successfully' });
       }
-    });
+    }
+    );
+    
   });
   
   // Delete a todo

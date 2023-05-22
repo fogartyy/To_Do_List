@@ -8,6 +8,7 @@ export const createTodo = async (data) => {
         console.log(data);
         const response = await axios.post(`${API_URL}/todos`, data);
         //log
+        console.log(response.data);
     } catch (error) {
         throw error;
     }
@@ -17,6 +18,7 @@ export const createTodo = async (data) => {
 export const readTodos = async () => {
     try {
         const response = await axios.get(`${API_URL}/todos`);
+        console.log(response.data);
         return response.data;
     } catch (error) {
         throw error;
