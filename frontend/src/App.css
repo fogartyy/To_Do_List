@@ -5,6 +5,7 @@
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    padding-top: 10px;
 }
 
 .button:hover {
@@ -12,6 +13,11 @@
     cursor: pointer;
     transform: scale(0.9);
     transition: 0.2s;
+}
+
+.button:active {
+  transform: scale(1.1);
+  transition: 0.2s;
 }
 
 .rounded {
@@ -24,6 +30,7 @@
     
     grid-gap: 1%;
 }
+
 
 ul{
     list-style-type: none;
@@ -40,8 +47,8 @@ ul{
 }
 
 .container p, .grid input{
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .grid input{
@@ -49,6 +56,8 @@ ul{
   border: 1px solid #ccc;
   box-sizing: border-box;
   border: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
   
 }
 
@@ -66,4 +75,5 @@ ul{
 .text{
   color: rgba(0, 0, 0, 0.43);
   font-weight: bold;
+  text-align: center;
 }

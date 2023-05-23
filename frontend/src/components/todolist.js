@@ -66,6 +66,18 @@ class TodoListItem extends Component {
         )
     }
 
+    handleUndo = () => {
+      console.log(this.props.todo.id);
+      updateTodo(this.props.todo.id, {
+          title: this.state.title,
+          description: this.state.description,
+          completed: false
+      }).then(() => {
+          this.props.refreshData();
+      }
+      )
+  }
+
 
     //set background color to green if completed is true
     
@@ -81,7 +93,7 @@ class TodoListItem extends Component {
             return (
                 this.state.isEditing ? (
                     <form className="grid container" style={{ gridTemplateColumns: "auto auto auto", marginTop: "20px" }}>
-                      <input style={{ textAlign: "center" }} id="title" type="text" value={this.state.title} onChange={this.handleChange} />
+                      <input style={{ textAlign: "center" }} id="title" type="text" required value={this.state.title} onChange={this.handleChange} />
                       <input style={{ textAlign: "center" }} id="description" type="text" value={this.state.description} onChange={this.handleChange} />
                       <p className="button rounded" onClick={this.handleUpdate}>Update</p>
                     </form>
@@ -91,7 +103,7 @@ class TodoListItem extends Component {
                       <li className="grid container" style={{ gridTemplateColumns: "35% 35% auto auto", marginTop: "20px", ...this.backGroundColor() }}>
                         <p className="text">{this.props.todo.title}</p>
                         <p className="text">{this.props.todo.description}</p>
-                        <p className="button rounded" onClick={this.handleComplete}>Undo</p>
+                        <p className="button rounded" onClick={this.handleUndo}>Undo</p>
                         <p className="button rounded" onClick={() => this.deleteTodoItem(this.props.todo.id)}>X</p>
                       </li>
                     ) : (
@@ -136,6 +148,7 @@ export class TodoListContainer extends Component {
   render() {
     return (
         <div style={{width:"50%"}} className="center">
+            <h1 className='grid text'>To-Do List</h1>
             <CreateTodoItem refreshData={this.refreshData} />
             <TodoList todos={this.state.todos} refreshData={this.refreshData} />
         </div>
@@ -175,8 +188,8 @@ export class CreateTodoItem extends Component {
 
   render() {
     return (
-      <form className="grid" style={{gridTemplateColumns: "auto auto auto", marginBottom:"20px", marginTop:"20px"}} onSubmit={this.handleSubmit}>
-        <input style={{textAlign:"center"}} id="title" type="text" value={this.state.title} onChange={this.handleChange} placeholder="Enter To-do Item Title" />
+      <form className="grid createtodolist" style={{gridTemplateColumns: "auto auto auto", marginBottom:"20px", marginTop:"20px"}} onSubmit={this.handleSubmit}>
+        <input style={{textAlign:"center"}} required id="title" type="text" value={this.state.title} onChange={this.handleChange} placeholder="Enter To-do Item Title" />
         <input style={{textAlign:"center"}} id="description" type="text" value={this.state.description} onChange={this.handleChange} placeholder="Enter To-do Item Description" />
         <input className="button" type="submit" value="Add" />
       </form>
