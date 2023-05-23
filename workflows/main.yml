@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Compose
+        run: |
+          sudo apt-get install -y docker-compose
+
+      - name: Build and run containers
+        run: |
+          docker-compose up --build -d
+
+      - name: Run tests
+        run: |
+          docker-compose exec frontend npm test
+
+      - name: Stop containers
+        run: |
+          docker-compose down
