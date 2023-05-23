@@ -42,7 +42,6 @@ The To-Do List App is a web application that allows users to create and manage t
    ```shell
    # Database
    DB_HOST=mysql
-   DB_PORT=3306
    DB_USER=root
    DB_PASSWORD=your_password
    DB_NAME=todolist
@@ -93,5 +92,4 @@ Table: todolist
 | description  | text       |
 | completed    | boolean    |
 | createdAt    | timestamp  |
-| updatedAt    | timestamp  |
 -----------------------------
