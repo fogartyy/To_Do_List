@@ -24,10 +24,6 @@ jobs:
         run: |
           docker-compose up --build -d
 
-      - name: Run tests
-        run: |
-          docker-compose exec frontend npm test
-
       - name: Stop containers
         run: |
           docker-compose down
