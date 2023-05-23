@@ -12,7 +12,7 @@
 
 ## Project Overview
 
-The To-Do List App is a web application that allows users to create and manage their daily tasks. Users can register an account, log in, and perform operations such as adding, editing, and deleting tasks. The app provides a simple and intuitive user interface for managing to-do lists efficiently.
+The To-Do List App is a web application that allows users to create and manage their daily tasks. Users can perform operations such as adding, editing, and deleting tasks. The app provides a simple and intuitive user interface for managing to-do lists efficiently.
 
 ## Technologies Used
 
