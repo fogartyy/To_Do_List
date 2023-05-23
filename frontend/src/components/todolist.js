@@ -73,7 +73,7 @@ class TodoListItem extends Component {
             isEditing: false,
             status: loadingStatus()
         })
-        updateTodo(this.props.todo.id, {
+        updateTodo(this.state.id, {
             title: this.state.title,
             description: this.state.description
         }).then((data) => {
