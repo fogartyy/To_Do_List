@@ -9,13 +9,13 @@ app.use(cors());
 app.use(express.json());
 var connection;
 
-function connectWithRetry() {
+const connectWithRetry = () => {
   const connect = mysql.createConnection({
-    host: 'mysql',
-    user: 'root',
-    password: 'root',
-    database: 'todolist',
-  });
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
+  })
 
   connect.connect((err) => {
     if (err) {

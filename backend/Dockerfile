@@ -14,5 +14,11 @@ RUN npm install --production
 # Expose the necessary port
 EXPOSE 8080
 
+# Set the environment variables for MySQL connection
+ENV MYSQL_HOST=$MYSQL_HOST
+ENV MYSQL_USER=$MYSQL_USER
+ENV MYSQL_PASSWORD=$MYSQL_PASSWORD
+ENV MYSQL_DATABASE=$MYSQL_DATABASE
+
 # Start the Express.js app
 CMD ["node", "server.js"]
