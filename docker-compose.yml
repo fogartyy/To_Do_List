@@ -8,16 +8,23 @@ services:
       - "3000:3000"
     depends_on:
       - backend
+
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    env_file:
-      - .env
     depends_on:
       - mysql
+    environment:
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    env_file:
+      - .env
+
   mysql:
     build:
       context: ./mysql
@@ -25,9 +32,13 @@ services:
     ports:
       - "3306:3306"
     command: --default-authentication-plugin=mysql_native_password
-    env_file:
-      - .env
     volumes:
       - mysql-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    env_file:
+      - .env
+
 volumes:
   mysql-data:
