@@ -44,7 +44,7 @@ The To-Do List App is a web application that allows users to create and manage t
    MYSQL_HOST=mysql
    MYSQL_USER=root
    MYSQL_PASSWORD=your_password
-   MYSQL_NAME=todolist
+   MYSQL_DATABASE=todolist
    ```
 
    Replace `your_password` with your desired MySQL root password.
