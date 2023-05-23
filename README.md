@@ -61,11 +61,10 @@ The To-Do List App is a web application that allows users to create and manage t
 
 ## Usage
 
-1. Register an account or log in with your existing account.
-2. Create a new task by clicking on the "Add Task" button.
-3. Edit a task by clicking on the task and modifying the details.
-4. Mark a task as completed by checking the checkbox next to it.
-5. Delete a task by clicking on the delete button.
+1. Create a new task by clicking on the "Add Task" button.
+2. Edit a task by clicking on the task and modifying the details.
+3. Mark a task as completed by checking the checkbox next to it.
+4. Delete a task by clicking on the delete button.
 
 ## API Documentation
 
