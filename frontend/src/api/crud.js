@@ -8,7 +8,7 @@ export const createTodo = async (data) => {
         console.log(data);
         const response = await axios.post(`${API_URL}/todos`, data);
         //log
-        console.log(response.data);
+        return response;
     } catch (error) {
         throw error;
     }
@@ -29,7 +29,8 @@ export const readTodos = async () => {
 export const updateTodo = async (id, data) => {
     try {
         const response = await axios.put(`${API_URL}/todos/${id}`, data);
-        return response.data;
+        //return status code
+        return response;
     } catch (error) {
         throw error;
     }
@@ -39,7 +40,7 @@ export const updateTodo = async (id, data) => {
 export const deleteTodo = async (id) => {
     try {
         const response = await axios.delete(`${API_URL}/todos/${id}`);
-        return response.data;
+        return response;
     } catch (error) {
         throw error;
     }

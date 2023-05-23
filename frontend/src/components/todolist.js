@@ -1,5 +1,7 @@
 import { createTodo, readTodos, updateTodo, deleteTodo } from "../api/crud";
 import React, { Component } from 'react'
+//import status
+import { loadingStatus, doneStatus,failedStatus } from './status';
 
 const TodoList = (props) => {
   return (
@@ -16,11 +18,42 @@ class TodoListItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: false,
             isEditing: false,
             title: this.props.todo.title,
             description: this.props.todo.description,
-            completed: this.props.todo.completed
+            completed: this.props.todo.completed,
+            status: "",
+            promise: this.props.todo.promise,
+            id: this.props.todo.id
         }
+    }
+
+
+    componentDidMount() {
+      //if promise is not null
+      if (this.state.promise) {
+        //set status to loading
+        this.setState({
+          status: loadingStatus(),
+          loading: true
+        })
+        //wait for promise to resolve
+        this.state.promise.then((data) => {
+          console.log(data);
+          if (data.status === 201) {
+            this.setState({
+              status: doneStatus(),
+              id: data.data.id,
+              loading: false
+            });
+          } else {
+            this.setState({
+              status: failedStatus()
+            });
+          }
+        });
+      }
     }
 
     handleChange = (event) => {
@@ -36,44 +69,82 @@ class TodoListItem extends Component {
     }
 
     handleUpdate = () => {
+        this.setState({
+            isEditing: false,
+            status: loadingStatus()
+        })
         updateTodo(this.props.todo.id, {
             title: this.state.title,
             description: this.state.description
-        }).then(() => {
-            this.setState({
-                isEditing: false
-            })
-            this.props.refreshData();
-            
+        }).then((data) => {
+            //check if 200 status code
+            if (data.status === 200) {
+                this.setState({
+                    status: doneStatus()
+                })
+            }
+            else {
+                this.setState({
+                    status: failedStatus()
+                })
+            }
         })
     }
 
-    deleteTodoItem = (id) => {
-        deleteTodo(id).then(() => {
+    deleteTodoItem = () => {
+        deleteTodo(this.state.id).then(() => {
             this.props.refreshData();
         })
     }
 
     handleComplete = () => {
-        console.log(this.props.todo.id);
-        updateTodo(this.props.todo.id, {
-            title: this.state.title,
-            description: this.state.description,
-            completed: true
-        }).then(() => {
-            this.props.refreshData();
+        this.setState({
+          completed: true,
+          status: loadingStatus()
+        })
+
+        updateTodo(this.state.id, {
+          title: this.state.title,
+          description: this.state.description,
+          completed: true
+        }).then((data) => {
+          //check if 200 status code
+          console.log(data.status);
+          if (data.status === 200) {
+            this.setState({
+              status: doneStatus()
+            })
+          }
+          else {
+            this.setState({
+              status: failedStatus()
+            })
+          }
         }
         )
     }
 
     handleUndo = () => {
-      console.log(this.props.todo.id);
-      updateTodo(this.props.todo.id, {
+      this.setState({
+          completed: false,
+          status: loadingStatus()
+      })
+      updateTodo(this.state.id, {
           title: this.state.title,
           description: this.state.description,
           completed: false
-      }).then(() => {
-          this.props.refreshData();
+      }).then((data) => {
+          //check if 200 status code
+          if (data.status === 200) {
+              this.setState({
+                  status: doneStatus()
+              })
+          }
+          else {
+              this.setState({
+                  status: failedStatus()
+              })
+          }
       }
       )
   }
@@ -82,7 +153,7 @@ class TodoListItem extends Component {
     //set background color to green if completed is true
     
     backGroundColor = () => {
-        if (this.props.todo.completed === 1) {
+        if (this.state.completed) {
             return {backgroundColor: "#15690056"}
         }
     }
@@ -90,36 +161,47 @@ class TodoListItem extends Component {
 
 
     render() {
-            return (
-                this.state.isEditing ? (
-                    <form className="grid container" style={{ gridTemplateColumns: "auto auto auto", marginTop: "20px" }}>
-                      <input style={{ textAlign: "center" }} id="title" type="text" required value={this.state.title} onChange={this.handleChange} />
-                      <input style={{ textAlign: "center" }} id="description" type="text" value={this.state.description} onChange={this.handleChange} />
-                      <p className="button rounded" onClick={this.handleUpdate}>Update</p>
-                    </form>
-                  ) : (
-                    this.props.todo.completed ? (
-                      // Render completed todo item with green background
-                      <li className="grid container" style={{ gridTemplateColumns: "35% 35% auto auto", marginTop: "20px", ...this.backGroundColor() }}>
-                        <p className="text">{this.props.todo.title}</p>
-                        <p className="text">{this.props.todo.description}</p>
-                        <p className="button rounded" onClick={this.handleUndo}>Undo</p>
-                        <p className="button rounded" onClick={() => this.deleteTodoItem(this.props.todo.id)}>X</p>
-                      </li>
-                    ) : (
-                      // Render regular todo item
-                      <li className="grid container" style={{ gridTemplateColumns: "35% 35% auto auto auto", marginTop: "20px" }}>
-                        <p className="text">{this.props.todo.title}</p>
-                        <p className="text">{this.props.todo.description}</p>
-                        <p className="button rounded" onClick={this.handleComplete}>Done</p>
-                        <p className="button rounded" onClick={this.handleEdit}>Edit</p>
-                        <p className="button rounded" onClick={() => this.deleteTodoItem(this.props.todo.id)}>X</p>
-                      </li>
-                    )
-                  )
+      return (
+        this.state.loading ? (
+          <li className="grid container" style={{ gridTemplateColumns: "35% 35% auto auto", marginTop: "20px", opacity:"0.4"}}>
+                {this.state.status}
+                <p className="text">{this.props.todo.title}</p>
+                <p className="text">{this.props.todo.description}</p>              
+              </li>
+        ) : (
+          this.state.isEditing ? (
+            <form className="grid container" style={{ gridTemplateColumns: "auto auto auto", marginTop: "20px" }}>
+              <input style={{ textAlign: "center" }} id="title" type="text" required value={this.state.title} onChange={this.handleChange} />
+              <input style={{ textAlign: "center" }} id="description" type="text" value={this.state.description} onChange={this.handleChange} />
+              <p className="button rounded" onClick={this.handleUpdate}>Update</p>
+            </form>
+          ) : (
+            this.state.completed ? (
+              // Render completed todo item with green background
+              <li className="grid container" style={{ gridTemplateColumns: "35% 35% auto auto", marginTop: "20px", ...this.backGroundColor() }}>
+                {this.state.status}
+                <p className="text">{this.state.title}</p>
+                <p className="text">{this.state.description}</p>
+                <p className="button rounded" onClick={this.handleUndo}>Undo</p>
+                <p className="button rounded" onClick={() => this.deleteTodoItem()}>X</p>
+                
+              </li>
+            ) : (
+                <li className="grid container" style={{ gridTemplateColumns: "35% 35% auto auto auto", marginTop: "20px" }}>
+                  {this.state.status}
+                  <p className="text">{this.state.title}</p>
+                <p className="text">{this.state.description}</p>
+                  <p className="button rounded" onClick={this.handleComplete}>Done</p>
+                  <p className="button rounded" onClick={this.handleEdit}>Edit</p>
+                  <p className="button rounded" onClick={() => this.deleteTodoItem()}>X</p>
+                </li>
             )
+          )
+        )
+      );
     }
-}
+    
+  }    
 
 
 
@@ -140,8 +222,6 @@ export class TodoListContainer extends Component {
       this.setState({
         todos: [...data]
       });
-
-      console.log(data);
     });
   }
 
@@ -149,7 +229,7 @@ export class TodoListContainer extends Component {
     return (
         <div style={{width:"50%"}} className="center">
             <h1 className='grid text'>To-Do List</h1>
-            <CreateTodoItem refreshData={this.refreshData} />
+            <CreateTodoItem refreshData={this.refreshData} container={this} />
             <TodoList todos={this.state.todos} refreshData={this.refreshData} />
         </div>
     )
@@ -173,11 +253,17 @@ export class CreateTodoItem extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    createTodo({
-      title: this.state.title,
-      description: this.state.description
-    }).then(() => {
-      this.props.refreshData(); // Use the refreshData prop passed from the parent component
+    //add data to todo container
+    this.props.container.setState({
+      todos: [...this.props.container.state.todos, {
+        title: this.state.title,
+        description: this.state.description,
+        completed: false,
+        promise: createTodo({
+          title: this.state.title,
+          description: this.state.description
+        })
+      }]
     })
 
     this.setState({

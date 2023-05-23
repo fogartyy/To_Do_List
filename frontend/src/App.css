@@ -62,7 +62,7 @@ ul{
 }
 
 .grid{
- 
+  position: relative;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 10px;
@@ -70,10 +70,20 @@ ul{
   background-color: rgba(128, 128, 128, 0.108);
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  
 }
 
 .text{
   color: rgba(0, 0, 0, 0.43);
   font-weight: bold;
   text-align: center;
+}
+
+.status{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding-left: 10px;
+  padding-bottom: 5px;
+  opacity: 0.4;
 }
