@@ -14,11 +14,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    environment:
-      - MYSQL_HOST=mysql
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
-      - MYSQL_DATABASE=todolist
+    env_file:
+      - .env
     depends_on:
       - mysql
   mysql:
@@ -28,9 +25,8 @@ services:
     ports:
       - "3306:3306"
     command: --default-authentication-plugin=mysql_native_password
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=todolist
+    env_file:
+      - .env
     volumes:
       - mysql-data:/var/lib/mysql
 volumes:
