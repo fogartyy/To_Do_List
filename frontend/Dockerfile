@@ -3,6 +3,7 @@ FROM node:14.17.0 as react-build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
+RUN npm run test
 COPY ./ ./
 RUN npm run build
 
