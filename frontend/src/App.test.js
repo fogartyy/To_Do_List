@@ -1,8 +1,11 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders App component', () => {
+  // Render the App component
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  
+  // Assert that the TodoListContainer component is present
+  expect(screen.getByTestId('todo-list-container')).toBeInTheDocument();
 });
