@@ -26,7 +26,7 @@ jobs:
 
       - name: Run tests
         run: |
-          docker-compose exec frontend npm test
+          docker-compose exec -T frontend npm test
 
       - name: Stop containers
         run: |
