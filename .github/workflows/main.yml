@@ -23,6 +23,15 @@ jobs:
       - name: Build and run containers
         run: |
           docker-compose up --build -d
+        
+      - name: Run Test
+        run: |
+          docker-compose exec <service-name> npm run test
+        env:
+          MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
 
       - name: Stop containers
         run: |
