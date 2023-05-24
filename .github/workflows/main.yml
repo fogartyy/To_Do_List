@@ -26,7 +26,7 @@ jobs:
         
       - name: Run Test
         run: |
-          docker-compose exec -T frontend npm run test
+          docker-compose exec -T to_do_list_frontend_1 npm run test
         env:
           MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
           MYSQL_USER: ${{ secrets.MYSQL_USER }}
