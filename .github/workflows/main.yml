@@ -1,5 +1,3 @@
-name: CI
-
 on:
   push:
     branches:
@@ -23,10 +21,15 @@ jobs:
       - name: Build and run containers
         run: |
           docker-compose up --build -d
+          
+      - name: Wait for containers to start
+        run: |
+          sleep 10 # Adjust the sleep duration if needed
+
         
       - name: Run Test
         run: |
-          docker-compose exec -T to_do_list_frontend_1 npm run test
+          docker-compose exec -T frontend npm run test
         env:
           MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
           MYSQL_USER: ${{ secrets.MYSQL_USER }}
